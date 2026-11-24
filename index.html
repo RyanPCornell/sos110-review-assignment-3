@@ -701,7 +701,8 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
         <button class="rv-btn ghost" type="button" data-undo title="Undo (Ctrl+Z)" disabled>&#8630; Undo</button>
         <select class="rv-sel" data-example aria-label="Load the worked example">
           <option value="">Load an example&hellip;</option>
-          <option value="salt">The Salt River in Phoenix</option>
+          <option value="shade">Simple: a parking lot becomes a shade park</option>
+          <option value="salt">Detailed: the Salt River in Phoenix</option>
         </select>
         <button class="rv-info" type="button" data-infobtn title="How this tool works">&#9432; Info</button>
       </div>
@@ -849,8 +850,9 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
             <span class="rv-ui">&minus; Arrow</span>: drag from one piece to another; clicking an arrow cycles it through the
             three. Work saves in this browser as you go; <span class="rv-ui">Save</span> downloads a file you can
             <span class="rv-ui">Open</span> on any computer.</p>
-          <p class="rv-i-p rv-i-muted">The worked example is the Salt River in Phoenix: the same kind of story, on a different
-            river, so it shows the shape of a poster without giving away the LA River.</p>
+          <p class="rv-i-p rv-i-muted">Two worked examples, neither about the LA River. The <i>simple</i> one, a parking lot
+            that becomes a shade park, shows the basic moves: lanes, symbols, one loop of each kind. The <i>detailed</i> one,
+            the Salt River in Phoenix, tells the same kind of story as your poster on a different river.</p>
         </div>
         <div class="rv-card-f"><span class="rv-note">Nothing is uploaded anywhere. Your work stays on this computer until you save or print it.</span>
           <button class="rv-btn primary" type="button" data-close>Close</button></div>
@@ -1313,7 +1315,36 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
       confirmBox('Clear the diagram? Every piece and arrow goes. Your title, name, answers and takeaways stay, and Undo brings it all back.','Clear it',
         function(){ doc.nodes=[]; doc.links=[]; sel=null; pend=null; hiLoop=null; render(); commit(); }); });
 
-    var EXAMPLES={ salt:function(){
+    /* the SIMPLE example: eleven pieces, short labels, one loop of each kind, read left (engineered) to right (restored) */
+    var EXAMPLES={ shade:function(){
+      var d=blank(); d.title='Example: A Hot Parking Lot Becomes a Shade Park'; d.name='Worked example';
+      d.answers={
+        s1:'People walk, meet neighbors and use the park, and nearby businesses get more foot traffic.',
+        s2:'Hot, treeless blocks are often in lower-income neighborhoods. Who gets the new shade first is an equity question.',
+        e1:'Trees cool the block, give birds habitat and soak up rain. A shaded block copes better with a heat wave.',
+        e2:'In a desert the trees need water, and a drought or a broken irrigation line could kill them.',
+        t1:'An asphalt parking lot, and air conditioners in the buildings around it.',
+        t2:'The asphalt made the block hotter, which pushed people indoors and made the air conditioners work harder.'};
+      d.summary='The parking lot started a reinforcing loop of heat: hotter streets, more air conditioning, more waste heat. The park starts a better reinforcing loop: shade brings people, and people ask for more trees. The water the trees need is the balancing loop that keeps the park from growing forever.';
+      function N(id,k,label,x,y,era){ d.nodes.push({id:id,k:k,label:label,x:x,y:y,era:era||''}); }
+      N('n1','term','Start: we need parking',200,100);
+      N('n2','dec','Turn the lot into a park?',520,115);
+      N('n3','proc','Neighbors ask for more trees',760,95,'future');
+      N('n4','proc','More people walk and visit',990,95,'future');
+      N('n5','proc','Streets get hotter',320,330,'past');
+      N('n6','emer','A block that cools itself',545,330);
+      N('n7','proc','Shade trees planted',760,320,'future');
+      N('n8','proc','Cooler sidewalks',990,320,'future');
+      N('n9','proc','Asphalt parking lot built',200,545,'past');
+      N('n10','proc','More air conditioning',440,545,'past');
+      N('n11','io','Input: water to keep trees alive',760,545,'future');
+      function A(a,b,t){ d.links.push({a:a,b:b,t:t}); }
+      A('n1','n9','f'); A('n9','n5','p'); A('n5','n10','p'); A('n10','n5','p');
+      A('n5','n2','f'); A('n2','n7','f');
+      A('n7','n8','p'); A('n8','n4','p'); A('n4','n3','p'); A('n3','n7','p');
+      A('n7','n11','p'); A('n11','n7','n');
+      d.seq=12; return d; },
+      salt:function(){
       var d=blank(); d.title='Example: The Salt River (Rio Salado) in Phoenix as a System'; d.name='Worked example';
       d.answers={
         s1:'Five miles of trails, birding and the Audubon center (opened 2009) turned a dumping site just south of downtown Phoenix into a place people visit.',
@@ -1344,7 +1375,9 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
       A('n5','n10','p'); A('n10','n9','n'); A('n9','n8','f'); A('n1','n3','f');
       d.seq=15; return d; } };
     $('[data-example]').addEventListener('change',function(e){ var k=e.target.value; e.target.value=''; if(!EXAMPLES[k]) return; closeInsp();
-      var go=function(){ load(EXAMPLES[k]()); toast('The worked example is loaded. Undo brings your own work back.',3600); };
+      var go=function(){ load(EXAMPLES[k]());
+        toast(k==='shade'? 'Read it left to right: the parking lot on the left, the shade park on the right. Click a loop in the panel to light it up, or try <b>Show</b>. Undo brings your own work back.'
+                         : 'The worked example is loaded. Undo brings your own work back.', k==='shade'? 7000 : 3600); };
       if(doc.nodes.length) confirmBox('Load the worked example? It replaces what is on the canvas now. You can Undo afterwards.','Load it',go); else go(); });
 
     /* ═══════ Save as PDF: one landscape poster ═══════ */
