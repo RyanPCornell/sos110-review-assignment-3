@@ -533,7 +533,8 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
   background:none; border:1px solid transparent; border-radius:7px; padding:.2rem .25rem; cursor:pointer;}
 .rv-loop:hover{background:#f6f4ec;} .rv-loop.on{background:#fbf3df; border-color:#e3c77d;}
 .rv-loop b{flex:none; width:1rem; height:1rem; border-radius:50%; color:#fff; font-size:.58rem; display:flex; align-items:center; justify-content:center; margin-top:.05rem;}
-.rv-loop.r b{background:#A4373A;} .rv-loop.b b{background:#2f7d4f;} .rv-loop.u b{background:#9a988c;}
+.rv-loop b{background:#fff; border:1.5px solid currentColor; font-size:.62rem; font-weight:900;}
+.rv-loop.r b{color:#2f6b3f;} .rv-loop.b b{color:#A4373A;} .rv-loop.u b{color:#8a887c;}
 .rv-lmore{font-size:.6rem; color:#9a988c; padding-left:.3rem;}
 
 /* modals */
@@ -573,6 +574,9 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
 .rv-i-key td b.pos{color:#2f6b3f;} .rv-i-key td b.neg{color:#A4373A;}
 .rv-i-p{font-family:'Merriweather',serif; font-size:.8rem; line-height:1.6; color:#2f3f38;} .rv-i-p b{color:var(--forest);}
 .rv-i-muted{color:#6b7d75; font-style:italic;}
+.rv-i-list{margin:0; padding-left:1.1rem; display:flex; flex-direction:column; gap:.3rem; font-family:'Merriweather',serif; font-size:.8rem; line-height:1.55; color:#2f3f38;}
+.rv-i-list b{color:var(--forest);} .rv-i-list b.pos{color:#2f6b3f;} .rv-i-list b.neg{color:#A4373A;}
+.rv-anseg{margin-top:-.3rem; color:#6D597A; font-style:italic;}
 .rv-ui{font-family:'Inter',sans-serif; font-size:.92em; font-weight:700; color:var(--forest); background:#f0efe8; border-radius:5px; padding:0 .3rem; white-space:nowrap;}
 
 @media(max-width:1100px){
@@ -792,6 +796,8 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
           <button class="rv-x" type="button" data-close aria-label="Close">&times;</button></div>
         <p class="rv-card-hint">Answer each in a few sentences, with a specific example from the video. They print as text
           boxes beside your diagram, one box per system.</p>
+        <p class="rv-card-hint rv-anseg" data-anseg hidden>This is a worked example. The questions are about the LA River;
+          the example answers the same questions for its own place.</p>
         <div class="rv-card-b rv-ans" data-anslist></div>
         <div class="rv-card-f"><span class="rv-note">Everything here prints on your poster.</span>
           <button class="rv-btn primary" type="button" data-close>Done</button></div>
@@ -828,28 +834,29 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
         <div class="rv-card-h"><h3>How this works</h3>
           <button class="rv-x" type="button" data-close aria-label="Close">&times;</button></div>
         <div class="rv-card-b rv-i">
-          <p class="rv-i-lead">The builder makes the poster the assignment asks for: a title band, a diagram of the river
-            as three linked systems, text boxes answering the six questions, and a summary. <b>Save as PDF</b> lays all of it
-            out on one landscape sheet.</p>
+          <div class="rv-i-rule"><span>Drawing and saving</span></div>
+          <ul class="rv-i-list">
+            <li>Drag a symbol into a lane, or click it.</li>
+            <li><b>Double-click any piece</b> to rename it, change its symbol or tag its era.</li>
+            <li><span class="rv-ui">&rarr; Arrow</span>, <span class="rv-ui">+ Arrow</span> or <span class="rv-ui">&minus; Arrow</span>:
+              drag from one piece to another. Click an arrow to switch its type.</li>
+            <li>Work saves in this browser as you go. <span class="rv-ui">Save</span> downloads a file you can
+              <span class="rv-ui">Open</span> on any computer.</li>
+          </ul>
           <div class="rv-i-rule"><span>The symbols</span></div>
           <table class="rv-i-key" data-ikey></table>
-          <div class="rv-i-rule"><span>System dynamics, on the canvas</span></div>
-          <p class="rv-i-p"><b>Boundaries.</b> The dashed frame is the system. A parallelogram shows what enters or leaves it.
-            <b>Interconnectedness.</b> Each lane is one system; an arrow from one lane to another is a link between systems.
-            <b>Feedback loops.</b> Label arrows <b class="pos">+</b> (the two move the same way) or <b class="neg">&minus;</b>
-            (opposite ways). When arrows close a circle, the panel names the loop: reinforcing if it has an even number of
-            &minus; arrows, balancing if odd. Click a loop to light it up. <b>Emergence.</b> Use the emergence callout for a
-            property of the whole system that no single part has.</p>
+          <div class="rv-i-rule"><span>System dynamics</span></div>
+          <ul class="rv-i-list">
+            <li><b>Boundaries.</b> The dashed frame is the system. A parallelogram shows what enters or leaves it.</li>
+            <li><b>Interconnectedness.</b> Each lane is one system. An arrow from one lane to another links two systems.</li>
+            <li><b>Feedback loops.</b> Mark arrows <b class="pos">+</b> (both move the same way) or <b class="neg">&minus;</b>
+              (they move opposite ways). When arrows close a circle, the panel names the loop: <b class="pos">R</b> reinforcing
+              (an even number of &minus; arrows) or <b class="neg">B</b> balancing (an odd number). Click a loop to light it up.</li>
+            <li><b>Emergence.</b> The starburst marks a property of the whole system that no single part has.</li>
+          </ul>
           <div class="rv-i-rule"><span>Trade-offs</span></div>
-          <p class="rv-i-p">Tag each piece to the <i>engineered era</i> (the concrete channel) or the <i>restoration</i>, or
-            leave it for both. The <span class="rv-ui">Show</span> switch above the canvas then shows either era alone, so you
-            can see what the channel gave the city and what it took away.</p>
-          <div class="rv-i-rule"><span>Drawing and saving</span></div>
-          <p class="rv-i-p">Drag a symbol into a lane, or click it. <b>Double-click any piece</b> to rename it, change its
-            symbol or tag its era. <span class="rv-ui">&rarr; Arrow</span>, <span class="rv-ui">+ Arrow</span> and
-            <span class="rv-ui">&minus; Arrow</span>: drag from one piece to another; clicking an arrow cycles it through the
-            three. Work saves in this browser as you go; <span class="rv-ui">Save</span> downloads a file you can
-            <span class="rv-ui">Open</span> on any computer.</p>
+          <p class="rv-i-p">Tag pieces <i>Engineered</i> (the concrete channel) or <i>Restoration</i>; untagged pieces belong to
+            both. The <span class="rv-ui">Show</span> switch then shows one era at a time.</p>
           <p class="rv-i-p rv-i-muted">Two worked examples, neither about the LA River. The <i>simple</i> one, a parking lot
             that becomes a shade park, shows the basic moves: lanes, symbols, one loop of each kind. The <i>detailed</i> one,
             the Salt River in Phoenix, tells the same kind of story as your poster on a different river.</p>
@@ -980,8 +987,7 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
       var s=edgePt(A,sa[0]/sl,sa[1]/sl,4), e=edgePt(B,ea[0]/el,ea[1]/el,5);
       var col= l.t==='p'? POS : l.t==='n'? NEG : INK, ang=Math.atan2(e[1]-my,e[0]-mx), ex=e[0]-10*Math.cos(ang), ey=e[1]-10*Math.sin(ang);
       var path='M'+r1(s[0])+' '+r1(s[1])+' Q'+r1(mx)+' '+r1(my)+' '+r1(ex)+' '+r1(ey), dim=!print && dimLink(l);
-      var cross= laneIdx(A.y)!==laneIdx(B.y);
-      var o='<g class="rv-arrow'+(dim?' dim':'')+(hiLoop&&!dim?' hot':'')+'" data-l="'+i+'"><path d="'+path+'" stroke="'+col+'" stroke-width="'+(l.t==='f'?2.2:2.7)+'" fill="none" stroke-linecap="round"'+(cross&&l.t==='f'?' stroke-dasharray="7 5"':'')+'/>'+head(e[0],e[1],ang,13,col);
+      var o='<g class="rv-arrow'+(dim?' dim':'')+(hiLoop&&!dim?' hot':'')+'" data-l="'+i+'"><path d="'+path+'" stroke="'+col+'" stroke-width="'+(l.t==='f'?2.2:2.7)+'" fill="none" stroke-linecap="round"'+'/>'+head(e[0],e[1],ang,13,col);
       if(l.t!=='f'){ var bx=.25*s[0]+.5*mx+.25*ex, by=.25*s[1]+.5*my+.25*ey;
         o+='<circle cx="'+r1(bx)+'" cy="'+r1(by)+'" r="10" fill="#fff" stroke="'+col+'" stroke-width="2"/><text x="'+r1(bx)+'" y="'+r1(by+5.4)+'" class="rv-sign" fill="'+col+'" text-anchor="middle">'+(l.t==='p'?'+':'−')+'</text>'; }
       if(!print) o+='<path class="rv-hit" d="'+path+'"/>';
@@ -1277,6 +1283,7 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
       QS.filter(function(q){ return q.lane===L.k; }).map(function(q){ return '<label class="rv-ansq"><span>'+esc(q.q)+'</span><textarea class="rv-fin" rows="3" maxlength="900" spellcheck="true" data-ans="'+q.k+'"></textarea></label>'; }).join('')+'</div>'; }).join('');
     ansList.querySelectorAll('[data-ans]').forEach(function(t){ t.addEventListener('input',function(){ doc.answers[t.dataset.ans]=t.value; renderPanel(); bandCommit(); }); });
     $('[data-ansbtn]').addEventListener('click',function(){ closeInsp(); ansList.querySelectorAll('[data-ans]').forEach(function(t){ t.value=doc.answers[t.dataset.ans]||''; });
+      $('[data-anseg]').hidden= !/^Example:/.test(String(doc.title||''));
       openModal(ansM); setTimeout(function(){ var f=ansList.querySelector('[data-ans]'); if(f) f.focus(); },40); });
     /* ── takeaways ── */
     var sumM=$('[data-summodal]'), sumTa=$('[data-sum]');
@@ -1325,25 +1332,26 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
         e2:'In a desert the trees need water, and a drought or a broken irrigation line could kill them.',
         t1:'An asphalt parking lot, and air conditioners in the buildings around it.',
         t2:'The asphalt made the block hotter, which pushed people indoors and made the air conditioners work harder.'};
-      d.summary='The parking lot started a reinforcing loop of heat: hotter streets, more air conditioning, more waste heat. The park starts a better reinforcing loop: shade brings people, and people ask for more trees. The water the trees need is the balancing loop that keeps the park from growing forever.';
+      d.summary='The parking lot started a reinforcing loop of heat: hotter streets, more air conditioning, more waste heat. The park starts a better reinforcing loop: shade brings people, and people ask for more trees. The water bill is the balancing loop: more trees cost more to water, which slows the planting.';
       function N(id,k,label,x,y,era){ d.nodes.push({id:id,k:k,label:label,x:x,y:y,era:era||''}); }
-      N('n1','term','Start: we need parking',200,100);
+      N('n1','term','Start: we need parking',200,100,'past');
       N('n2','dec','Turn the lot into a park?',520,115);
       N('n3','proc','Neighbors ask for more trees',760,95,'future');
       N('n4','proc','More people walk and visit',990,95,'future');
       N('n5','proc','Streets get hotter',320,330,'past');
-      N('n6','emer','A block that cools itself',545,330);
+      N('n6','emer','A block that cools itself',545,330,'future');
       N('n7','proc','Shade trees planted',760,320,'future');
       N('n8','proc','Cooler sidewalks',990,320,'future');
       N('n9','proc','Asphalt parking lot built',200,545,'past');
       N('n10','proc','More air conditioning',440,545,'past');
-      N('n11','io','Input: water to keep trees alive',760,545,'future');
+      N('n11','io','Input: water bill for the trees',760,545,'future');
+      N('n12','note','Balancing loop: more trees mean a bigger water bill, and a bigger bill means fewer new trees get planted.',1000,545,'future');
       function A(a,b,t){ d.links.push({a:a,b:b,t:t}); }
       A('n1','n9','f'); A('n9','n5','p'); A('n5','n10','p'); A('n10','n5','p');
       A('n5','n2','f'); A('n2','n7','f');
       A('n7','n8','p'); A('n8','n4','p'); A('n4','n3','p'); A('n3','n7','p');
       A('n7','n11','p'); A('n11','n7','n');
-      d.seq=12; return d; },
+      d.seq=13; return d; },
       salt:function(){
       var d=blank(); d.title='Example: The Salt River (Rio Salado) in Phoenix as a System'; d.name='Worked example';
       d.answers={
@@ -1362,7 +1370,7 @@ body.r3-host .ag-root,body.r3-host .bg3-root{padding-top:2.9rem;}
       N('n5','proc','Trails, birders and an Audubon center (2009)',845,66,'future');
       N('n6','proc','Public support and funding',1005,168,'future');
       N('n7','proc','River runs dry and riparian habitat is lost',375,330,'past');
-      N('n8','emer','A wetland in the middle of a desert city',615,382);
+      N('n8','emer','A wetland in the middle of a desert city',615,382,'future');
       N('n9','proc','600 acres of native habitat restored',845,285,'future');
       N('n10','proc','Visitor wear on plants and wildlife',1005,388,'future');
       N('n11','term','Start: the Salt River flows',165,505);
